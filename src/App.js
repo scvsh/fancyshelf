@@ -3,6 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Route } from 'react-router-dom';
 import Showcase from './Showcase.js'
+import Search from './Search.js'
 
 class BooksApp extends React.Component {
     constructor(props) {
@@ -13,13 +14,6 @@ class BooksApp extends React.Component {
             currentlyReading: [],
             wantToRead: [],
             read: [],
-            /**
-             * TODO: Instead of using this state variable to keep track of which page
-             * we're on, use the URL in the browser's address bar. This will ensure that
-             * users can use the browser's back and forward buttons to navigate between
-             * pages, as well as provide a good URL they can bookmark and share.
-             */
-            showSearchPage: false
         };
     }
 
@@ -39,6 +33,16 @@ class BooksApp extends React.Component {
         this.getAllBooks();
     }
 
+    checkBookShelf = (bookID) => {
+        let b = this.state.books.find((book) => {
+          return book.id === bookID
+        });
+
+        if (b)
+          return b.shelf;
+        else
+          return 'none';
+  }
 
     render() {
         let currentlyReadingBooks = this.state.books.filter((book) => book.shelf === 'currentlyReading');
@@ -48,9 +52,9 @@ class BooksApp extends React.Component {
         return (
         <div className="app">
         <Route path='/search' render={() => (
-          <SearchPage
+          <Search
             userBooks={this.state.books}
-            updateShelf={this.updateShelf}
+            updateBooks={this.updateBooks}
             checkBookShelf={this.checkBookShelf}
           />
         )} />
@@ -58,8 +62,10 @@ class BooksApp extends React.Component {
 
         <Route exact path='/' render={() => (
           <Showcase
-            books={this.state.books}
-            updateShelf={this.updateShelf}
+             readBooks={readBooks}
+             wantToReadBooks={wantToReadBooks}
+             currentlyReadingBooks={currentlyReadingBooks}
+             updateBooks={this.updateBooks}
           />
         )} />
       </div>
