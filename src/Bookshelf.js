@@ -3,32 +3,33 @@ import Book from './Book.js'
 import * as BooksAPI from './BooksAPI'
 
 class Bookshelf extends Component {
-    state = {
-    booklist: BooksAPI.getAll(),
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
-  }
-	render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showSearchPage: false,
+            bookList: []
+        };
+    }
+    componentWillMount() {
+        //BooksAPI.getAll().then(res => this.setState(res));
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({ bookList: nextProps.bookList });  
+    }
+    render() {
 
-	let _props = this.props;
+        let _props = this.props;
         return (
             <div className="bookshelf">
-                  <h2 className="bookshelf-title">{ _props.shelftitle ? _props.shelftitle : ""}</h2>
-                  <div className="bookshelf-books">
+                <h2 className="bookshelf-title">{ _props.shelftitle ? _props.shelftitle : ""}</h2>
+                <div className="bookshelf-books">
                     <ol className="books-grid">
-                      <li>
-                          <Book title="Test" authors="Test"/> 
-                      </li>
+                        {  this.state.bookList.map(book =>  <Book update={ _props.update } key={ book.id } title="Test" authors="Test" id={ book.id } shelf={ _props.shelftitle }/>  ) } 
                     </ol>
-                  </div>
-              </div>
+                </div>
+            </div>
         )
-	}
+    }
 }
 
 export default Bookshelf;
