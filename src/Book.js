@@ -12,18 +12,16 @@ class Book extends Component {
             imageLinks: {}
         };
     }
+
     componentDidMount() {
         this.setState({ shelf: this.props.shelf });        
         BooksAPI.get(this.props.id.toString()).then(res => this.setState(res));
-    }
-    componentWillMount() {
     }
 
     handleChange = (evt, book) => {
         this.props.update(this.props, evt.target.value);
         this.setState({ shelf: evt.target.value });
     }
-    
 
     render() {
 

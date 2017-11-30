@@ -42,32 +42,30 @@ class BooksApp extends React.Component {
           return b.shelf;
         else
           return 'none';
-  }
+    }
 
     render() {
         let currentlyReadingBooks = this.state.books.filter((book) => book.shelf === 'currentlyReading');
         let wantToReadBooks = this.state.books.filter((book) => book.shelf === 'wantToRead');
         let readBooks = this.state.books.filter((book) => book.shelf === 'read');
-        
+
         return (
         <div className="app">
-        <Route path='/search' render={() => (
+            <Route path='/search' render={() => (
           <Search
-            userBooks={this.state.books}
-            updateBooks={this.updateBooks}
-            checkBookShelf={this.checkBookShelf}
+              userBooks={this.state.books}
+              updateBooks={this.updateBooks}
+              checkBookShelf={this.checkBookShelf}
           />
-        )} />
-
-
+   )} />
         <Route exact path='/' render={() => (
           <Showcase
-             readBooks={readBooks}
-             wantToReadBooks={wantToReadBooks}
-             currentlyReadingBooks={currentlyReadingBooks}
-             updateBooks={this.updateBooks}
+              readBooks={readBooks}
+              wantToReadBooks={wantToReadBooks}
+              currentlyReadingBooks={currentlyReadingBooks}
+              updateBooks={this.updateBooks}
           />
-        )} />
+   )} />
       </div>
         )
     }
