@@ -84,6 +84,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+You can fork and tinker with this simple app to grok how the React works.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
