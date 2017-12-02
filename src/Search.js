@@ -10,13 +10,17 @@ class Search extends Component {
     }
 
      updateQuery = (query) => {
-        this.setState({ query: query.trim() })
         let maxResults = 20;
-        BooksAPI.search(query, maxResults).then((books) => {
-          this.addShelfToSearchedBooks(books);
-          this.setState({ books });
-    })
-   }
+        this.setState({ query: query })
+        query != '' ? (
+             BooksAPI.search(query, maxResults).then((books) => {
+              books.error ? this.setState({ books: [] }) : (
+                  this.addShelfToSearchedBooks(books),
+                  this.setState({ books })
+              )
+                          })
+        ) : this.setState({ books: [] });
+     }
 
   addShelfToSearchedBooks = (searchedBooks) => {
     searchedBooks.forEach((book) => {
@@ -48,8 +52,8 @@ class Search extends Component {
           <div className="search-books-results">
               <ol className="books-grid">
                   {this.state.books.length > 0 && (
-              this.state.books.map((book) => ( <Book update={ _props.updateBooks } key={ book.id } title="Test" authors="Test" id={ book.id } shelf={ _props.shelftitle }/> 
-)))}
+                    this.state.books.map(book =>  <Book currentBook={ book } update={ _props.update } key={ book.id } />  ) 
+              )}
           </ol>
       </div>
   </div>

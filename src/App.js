@@ -1,8 +1,9 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import { Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Showcase from './Showcase.js'
+import NotFound from './NotFound.js'
 import Search from './Search.js'
 
 class BooksApp extends React.Component {
@@ -11,9 +12,6 @@ class BooksApp extends React.Component {
         this.updateBooks = this.updateBooks.bind(this);
         this.state = {
             books: [],
-            currentlyReading: [],
-            wantToRead: [],
-            read: [],
         };
     }
 
@@ -24,10 +22,14 @@ class BooksApp extends React.Component {
     }
 
     updateBooks = (book, shelf) => {
-        BooksAPI.update(book, shelf).then((res) => {
-            this.getAllBooks();
-        })
-     }
+    console.log(book, shelf)
+      BooksAPI.update(book, shelf).then(() => {
+        book.currentBook.shelf = shelf;
+        this.setState(state => ({
+          books: state.books.filter(b=> b.id !== book.id).concat([book])
+        }))
+      })
+    }
 
     componentDidMount() {
         this.getAllBooks();
@@ -51,6 +53,7 @@ class BooksApp extends React.Component {
 
         return (
         <div className="app">
+            <Switch>
             <Route path='/search' render={() => (
           <Search
               userBooks={this.state.books}
@@ -66,6 +69,8 @@ class BooksApp extends React.Component {
               updateBooks={this.updateBooks}
           />
    )} />
+        <Route component= { NotFound }/>
+   </Switch>   
       </div>
         )
     }
