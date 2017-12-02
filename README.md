@@ -1,6 +1,6 @@
 # Fancyshelf Project
 
-This is book management application, based on the [Create React App](https://github.com/facebookincubator/create-react-app)
+This is a simple bookshelf management application, based on the [Create React App](https://github.com/facebookincubator/create-react-app)
 
 ## Installation
 
@@ -9,7 +9,7 @@ To get started developing right away:
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
-## What You're Getting
+## Project Structure
 ```bash
 ├── CONTRIBUTING.md
 ├── README.md - This file.
