@@ -1,25 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Book extends Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
+const Book = (props) => {
+    
+    let handleChange = (evt, book) => {
+        props.update(props.book, evt.target.value);
     }
 
-    handleChange = (evt, book) => {
-        this.props.update(this.props, evt.target.value);
-    }
-
-    render() {
-
-        let _props = this.props;
         return (
             <li>
                 <div className="book">
                     <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: 'url(' + _props.currentBook.imageLinks.smallThumbnail + ')' }}></div>
+                        <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: 'url(' + (props.book.imageLinks ? props.book.imageLinks.smallThumbnail : 'http://via.placeholder.com/128x188?text=No%20Cover') + ')' }}></div>
                         <div className="book-shelf-changer">
-                            <select value={ _props.currentBook.shelf } onChange={ this.handleChange }>
+                            <select value={ props.book.shelf } onChange={ handleChange }>
                                 <option value="none" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -28,12 +21,11 @@ class Book extends Component {
                             </select>
                         </div>
                     </div>
-                    <div className="book-title">{ _props.currentBook.title }</div>
-                    <div className="book-authors">{ _props.currentBook.authors ? _props.currentBook.authors.join(', ') : '' }</div>
+                    <div className="book-title">{ props.book.title }</div>
+                    <div className="book-authors">{ props.book.authors ? props.book.authors.join(', ') : '' }</div>
                 </div>
             </li>
         )
     }
-}
 
 export default Book;

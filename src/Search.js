@@ -12,13 +12,13 @@ class Search extends Component {
      updateQuery = (query) => {
         let maxResults = 20;
         this.setState({ query: query })
-        query != '' ? (
+        query !== '' ? (
              BooksAPI.search(query, maxResults).then((books) => {
               books.error ? this.setState({ books: [] }) : (
                   this.addShelfToSearchedBooks(books),
                   this.setState({ books })
-              )
-                          })
+                )
+             })
         ) : this.setState({ books: [] });
      }
 
@@ -52,7 +52,7 @@ class Search extends Component {
           <div className="search-books-results">
               <ol className="books-grid">
                   {this.state.books.length > 0 && (
-                    this.state.books.map(book =>  <Book currentBook={ book } update={ _props.update } key={ book.id } />  ) 
+                    this.state.books.map(book =>  <Book book={ book } update={ _props.update } key={ book.id } />  ) 
               )}
           </ol>
       </div>
